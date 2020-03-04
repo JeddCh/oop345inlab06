@@ -18,43 +18,30 @@ namespace sdds {
 
 	Car::Car(istream& file) {
 
-		Car::Car();
-
 		size_t pos;
 		size_t end_pos;
 		string temp;
-		bool go = false;
 
 		getline(file, temp, ',');
-		//remove space
+		
+		getline(file, temp, ',');
+		//remove leading and tailing white space
+		pos = temp.find_first_not_of(' ');
+		end_pos = temp.find_last_not_of(' ');
+		m_maker = temp.substr(pos, end_pos - pos + 1);
+
+		getline(file, temp, ',');
 		pos = temp.find_first_not_of(' ');
 		end_pos = temp.find_last_not_of(' ');
 		temp = temp.substr(pos, end_pos - pos + 1);
 
-		if (temp.at(0) == 'c' || temp.at(0) == 'C') {
-			go = true;
-		}
+		if (temp.at(0) == 'n') m_condition = Condition::New;
+		else if (temp.at(0) == 'u') m_condition = Condition::Used;
+		else if (temp.at(0) == 'b') m_condition = Condition::Broken;
+		else m_condition = Condition::Empty;
 
-		if (go) {
-
-			getline(file, temp, ',');
-			pos = temp.find_first_not_of(' ');
-			end_pos = temp.find_last_not_of(' ');
-			m_maker = temp.substr(pos, end_pos - pos + 1);
-
-			getline(file, temp, ',');
-			pos = temp.find_first_not_of(' ');
-			end_pos = temp.find_last_not_of(' ');
-			temp = temp.substr(pos, end_pos - pos + 1);
-
-			if (temp.at(0) == 'n') m_condition = Condition::New;
-			else if (temp.at(0) == 'u') m_condition = Condition::Used;
-			else if (temp.at(0) == 'b') m_condition = Condition::Broken;
-			else m_condition = Condition::Empty;
-
-			getline(file, temp);
-			m_topSpeed = stod(temp);
-		}
+		getline(file, temp);
+		m_topSpeed = stod(temp);
 	}
 
 	string Car::condition() const {
