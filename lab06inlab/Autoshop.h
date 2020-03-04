@@ -24,6 +24,7 @@ namespace sdds {
 
 		Autoshop& operator +=(Vehicle* theVehicle);
 		void display(std::ostream& out) const;
+		~Autoshop();
 
 	};
 

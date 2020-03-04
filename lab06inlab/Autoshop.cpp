@@ -33,4 +33,8 @@ namespace sdds {
 
 	}
 
+	Autoshop::~Autoshop() {
+		for (auto& car : m_vehicles) delete car;
+	}
+
 }
